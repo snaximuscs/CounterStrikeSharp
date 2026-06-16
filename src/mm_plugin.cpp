@@ -313,11 +313,11 @@ const char* CounterStrikeSharpMMPlugin::GetDate() { return BUILD_TIMESTAMP; }
 
 const char* CounterStrikeSharpMMPlugin::GetLogTag() { return "CSSHARP"; }
 
-const char* CounterStrikeSharpMMPlugin::GetAuthor() { return "Roflmuffin"; }
+const char* CounterStrikeSharpMMPlugin::GetAuthor() { return "Snaximus CS"; }
 
-const char* CounterStrikeSharpMMPlugin::GetDescription() { return "Counter Strike .NET Scripting Runtime"; }
+const char* CounterStrikeSharpMMPlugin::GetDescription() { return "Custom minimal production-focused CounterStrikeSharp fork runtime"; }
 
-const char* CounterStrikeSharpMMPlugin::GetName() { return "CounterStrikeSharp"; }
+const char* CounterStrikeSharpMMPlugin::GetName() { return "CounterStrikeSharp Minimal"; }
 
-const char* CounterStrikeSharpMMPlugin::GetURL() { return "https://github.com/roflmuffin/CounterStrikeSharp"; }
+const char* CounterStrikeSharpMMPlugin::GetURL() { return "https://github.com/snaximuscs/CounterStrikeSharp"; }
 } // namespace counterstrikesharp

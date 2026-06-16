@@ -9,8 +9,10 @@
         <EnablePackageValidation>true</EnablePackageValidation>
         <NoWarn>$(NoWarn);CS1591;CP0003</NoWarn>
         <Nullable>enable</Nullable>
-        <Authors>Roflmuffin</Authors>
-        <Description>Official server side runtime assembly for CounterStrikeSharp</Description>
+        <Authors>Snaximus CS</Authors>
+        <Company>Snaximus CS</Company>
+        <Product>CounterStrikeSharp Minimal</Product>
+        <Description>Custom minimal production-focused CounterStrikeSharp fork runtime assembly for Linux CS2 servers</Description>
         <PackageProjectUrl>http://docs.cssharp.dev/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/roflmuffin/CounterStrikeSharp</RepositoryUrl>
         <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
