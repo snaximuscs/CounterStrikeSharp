@@ -39,7 +39,9 @@
 #endif
 
 #include <cassert>
+#include <filesystem>
 #include <iostream>
+#include <optional>
 
 #include "core/log.h"
 #include "core/utils.h"
@@ -62,6 +64,7 @@ namespace {
 // Forward declarations
 void* load_library(const char_t*);
 void* get_export(void*, const char*);
+std::optional<std::string> find_hostfxr_path(const std::string& base_dir);
 
 #ifdef _WINDOWS
 void* load_library(const char_t* path)
@@ -80,34 +83,102 @@ void* get_export(void* h, const char* name)
 #else
 void* load_library(const char_t* path)
 {
+    dlerror();
     void* h = dlopen(path, RTLD_LAZY | RTLD_LOCAL);
-    assert(h != nullptr);
+    if (h == nullptr)
+    {
+        const char* error = dlerror();
+        CSSHARP_CORE_CRITICAL("Failed to load library \"{}\": {}", path, error != nullptr ? error : "unknown error");
+    }
     return h;
 }
 void* get_export(void* h, const char* name)
 {
+    if (h == nullptr)
+    {
+        return nullptr;
+    }
+
+    dlerror();
     void* f = dlsym(h, name);
-    assert(f != nullptr);
+    if (f == nullptr)
+    {
+        const char* error = dlerror();
+        CSSHARP_CORE_CRITICAL("Failed to get export function \"{}\": {}", name, error != nullptr ? error : "unknown error");
+    }
     return f;
 }
 #endif
+
+std::optional<std::string> find_hostfxr_path(const std::string& base_dir)
+{
+#if _WIN32
+    const auto hostfxr_root = std::filesystem::path(base_dir) / "dotnet" / "host" / "fxr";
+    const auto hostfxr_name = "hostfxr.dll";
+#else
+    const auto hostfxr_root = std::filesystem::path(base_dir) / "dotnet" / "host" / "fxr";
+    const auto hostfxr_name = "libhostfxr.so";
+#endif
+
+    std::error_code ec;
+    if (!std::filesystem::exists(hostfxr_root, ec))
+    {
+        CSSHARP_CORE_CRITICAL("hostfxr root does not exist: {}", hostfxr_root.string());
+        return std::nullopt;
+    }
+
+    std::filesystem::path selected_path;
+    std::string selected_version;
+    for (const auto& entry : std::filesystem::directory_iterator(hostfxr_root, ec))
+    {
+        if (ec || !entry.is_directory())
+        {
+            continue;
+        }
+
+        const auto candidate = entry.path() / hostfxr_name;
+        if (!std::filesystem::is_regular_file(candidate, ec))
+        {
+            continue;
+        }
+
+        const auto version = entry.path().filename().string();
+        if (selected_path.empty() || version > selected_version)
+        {
+            selected_path = candidate;
+            selected_version = version;
+        }
+    }
+
+    if (selected_path.empty())
+    {
+        CSSHARP_CORE_CRITICAL("No hostfxr library found under {}", hostfxr_root.string());
+        return std::nullopt;
+    }
+
+    return selected_path.string();
+}
 
 // <SnippetLoadHostFxr>
 // Using the nethost library, discover the location of hostfxr and get exports
 bool load_hostfxr()
 {
     std::string base_dir = counterstrikesharp::utils::GetRootDirectory();
-    namespace css = counterstrikesharp;
-#if _WIN32
-    std::wstring buffer = std::wstring(css::widen(base_dir) + L"\\dotnet\\host\\fxr\\10.0.3\\hostfxr.dll");
-    CSSHARP_CORE_INFO("Loading hostfxr from {0}", css::narrow(buffer).c_str());
-#else
-    std::string buffer = std::string(base_dir + "/dotnet/host/fxr/10.0.3/libhostfxr.so");
-    CSSHARP_CORE_INFO("Loading hostfxr from {0}", buffer.c_str());
-#endif
+    const auto hostfxr_path = find_hostfxr_path(base_dir);
+    if (!hostfxr_path.has_value())
+    {
+        return false;
+    }
+
+    CSSHARP_CORE_INFO("Loading hostfxr from {0}", hostfxr_path.value().c_str());
 
     // Load hostfxr and get desired exports
-    void* lib = load_library(buffer.c_str());
+#if _WIN32
+    const auto hostfxr_wide_path = counterstrikesharp::widen(hostfxr_path.value());
+    void* lib = load_library(hostfxr_wide_path.c_str());
+#else
+    void* lib = load_library(hostfxr_path.value().c_str());
+#endif
     init_fptr = (hostfxr_initialize_for_runtime_config_fn)get_export(lib, "hostfxr_initialize_for_runtime_config");
     if (init_fptr == nullptr)
     {
