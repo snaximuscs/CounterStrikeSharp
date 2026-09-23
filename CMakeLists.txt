@@ -8,18 +8,10 @@ include("makefiles/shared.cmake")
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-set(FUNCHOOK_BUILD_TESTS OFF CACHE BOOL "Disable building tests for funchook." FORCE)
-set(ZYDIS_BUILD_EXAMPLES OFF CACHE BOOL "Disable building examples for Zydis." FORCE)
-set(ZYDIS_BUILD_TOOLS OFF CACHE BOOL "Disable building tools for Zydis." FORCE)
-set(DYNOHOOK_BUILD_TESTS OFF CACHE BOOL "Disable building tests for funchook." FORCE)
 
 add_subdirectory(libraries/spdlog)
 add_subdirectory(libraries/dyncall)
-add_subdirectory(libraries/funchook)
-add_subdirectory(libraries/DynoHook)
 
-set_property(TARGET dynohook PROPERTY DYNO_ARCH_X86 64)
-set_property(TARGET funchook-static PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 include("makefiles/protobuf.cmake")
 
@@ -35,11 +27,6 @@ set(SOURCE_FILES
     libraries/hl2sdk-cs2/entity2/entitykeyvalues.cpp
     libraries/dotnet/hostfxr.h
     libraries/dotnet/coreclr_delegates.h
-    libraries/metamod-source/core/sourcehook/sourcehook.cpp
-    libraries/metamod-source/core/sourcehook/sourcehook_impl_chookidman.cpp
-    libraries/metamod-source/core/sourcehook/sourcehook_impl_chookmaninfo.cpp
-    libraries/metamod-source/core/sourcehook/sourcehook_impl_cvfnptr.cpp
-    libraries/metamod-source/core/sourcehook/sourcehook_impl_cproto.cpp
     src/scripting/dotnet_host.h
     src/scripting/dotnet_host.cpp
     src/core/utils.h
@@ -84,8 +71,11 @@ set(SOURCE_FILES
     src/core/cs2_sdk/interfaces/cgameresourceserviceserver.h
     src/core/cs2_sdk/interfaces/cs2_interfaces.h
     src/core/cs2_sdk/interfaces/cs2_interfaces.cpp
+    src/core/cs2_sdk/interfaces/navphysicsinterface.h
+    src/core/cs2_sdk/interfaces/navphysicsinterface.cpp
     src/core/cs2_sdk/schema.h
     src/core/cs2_sdk/schema.cpp
+    src/core/dynamic_hook.cpp
     src/core/function.cpp
     src/core/function.h
     src/scripting/natives/natives_memory.cpp
@@ -108,12 +98,16 @@ set(SOURCE_FILES
     src/core/managers/voice_manager.h
     src/core/managers/usermessage_manager.cpp
     src/core/managers/usermessage_manager.h
+    src/scripting/natives/natives_raytrace.cpp
     src/scripting/natives/natives_dynamichooks.cpp
     src/core/game_system.h
     src/core/game_system.cpp
     src/core/UserMessage.h
     src/core/UserMessage.cpp
     src/core/recipientfilters.h
+    src/core/customhudlayout.cpp
+    src/core/customhudlayout.h
+    src/scripting/natives/natives_customhud.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${NATIVES_SOURCES} ${CONVERSIONS_SOURCES} ${CONVERSIONS_HEADERS})

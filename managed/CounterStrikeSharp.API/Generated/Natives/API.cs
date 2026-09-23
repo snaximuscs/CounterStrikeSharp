@@ -367,6 +367,84 @@ namespace CounterStrikeSharp.API.Core
 			}
 		}
 
+        public static void SetHasClass(IntPtr customhud, string panelid, string classname, bool hasclass){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(customhud);
+			ScriptContext.GlobalScriptContext.PushString(panelid);
+			ScriptContext.GlobalScriptContext.PushString(classname);
+			ScriptContext.GlobalScriptContext.PushPrimitive(hasclass);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x22C79F53);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static void SetHasClassForPlayer(IntPtr customhud, IntPtr controller, string panelid, string classname, bool hasclass){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(customhud);
+			ScriptContext.GlobalScriptContext.PushPrimitive(controller);
+			ScriptContext.GlobalScriptContext.PushString(panelid);
+			ScriptContext.GlobalScriptContext.PushString(classname);
+			ScriptContext.GlobalScriptContext.PushPrimitive(hasclass);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x4093B77B);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static void SetDialogVariableString(IntPtr customhud, string panelid, string variablename, string value){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(customhud);
+			ScriptContext.GlobalScriptContext.PushString(panelid);
+			ScriptContext.GlobalScriptContext.PushString(variablename);
+			ScriptContext.GlobalScriptContext.PushString(value);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0xB8DAC643);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static void SetDialogVariableStringForPlayer(IntPtr customhud, IntPtr controller, string panelid, string variablename, string value){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(customhud);
+			ScriptContext.GlobalScriptContext.PushPrimitive(controller);
+			ScriptContext.GlobalScriptContext.PushString(panelid);
+			ScriptContext.GlobalScriptContext.PushString(variablename);
+			ScriptContext.GlobalScriptContext.PushString(value);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x80C9C06B);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static void SetInputCaptureEnabled(IntPtr customhud, IntPtr controller, bool enable){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(customhud);
+			ScriptContext.GlobalScriptContext.PushPrimitive(controller);
+			ScriptContext.GlobalScriptContext.PushPrimitive(enable);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0xAE78294F);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static bool IsInputCaptureEnabled(IntPtr customhud, IntPtr controller){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(customhud);
+			ScriptContext.GlobalScriptContext.PushPrimitive(controller);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0xB67A4877);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			return ScriptContext.GlobalScriptContext.GetResultPrimitive<bool>();
+			}
+		}
+
         public static string GetStringFromSymbolLarge(IntPtr pointer){
 			lock (ScriptContext.GlobalScriptContext.Lock) {
 			ScriptContext.GlobalScriptContext.Reset();
@@ -1600,6 +1678,93 @@ namespace CounterStrikeSharp.API.Core
 			ScriptContext.GlobalScriptContext.Invoke();
 			ScriptContext.GlobalScriptContext.CheckErrors();
 			return ScriptContext.GlobalScriptContext.GetResultPrimitive<IntPtr>();
+			}
+		}
+
+        public static void TraceShape(IntPtr startpos, IntPtr angles, IntPtr ignoreentity, ulong interactsas, ulong interactswith, ulong interactsexclude, IntPtr outresult){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(startpos);
+			ScriptContext.GlobalScriptContext.PushPrimitive(angles);
+			ScriptContext.GlobalScriptContext.PushPrimitive(ignoreentity);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactsas);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactswith);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactsexclude);
+			ScriptContext.GlobalScriptContext.PushPrimitive(outresult);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0xDBED3874);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static void TraceEndShape(IntPtr startpos, IntPtr endpos, IntPtr ignoreentity, ulong interactsas, ulong interactswith, ulong interactsexclude, IntPtr outresult){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(startpos);
+			ScriptContext.GlobalScriptContext.PushPrimitive(endpos);
+			ScriptContext.GlobalScriptContext.PushPrimitive(ignoreentity);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactsas);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactswith);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactsexclude);
+			ScriptContext.GlobalScriptContext.PushPrimitive(outresult);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x8A833D84);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static void TraceHullShape(IntPtr startpos, IntPtr endpos, IntPtr mins, IntPtr maxs, IntPtr ignoreentity, ulong interactsas, ulong interactswith, ulong interactsexclude, IntPtr outresult){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(startpos);
+			ScriptContext.GlobalScriptContext.PushPrimitive(endpos);
+			ScriptContext.GlobalScriptContext.PushPrimitive(mins);
+			ScriptContext.GlobalScriptContext.PushPrimitive(maxs);
+			ScriptContext.GlobalScriptContext.PushPrimitive(ignoreentity);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactsas);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactswith);
+			ScriptContext.GlobalScriptContext.PushPrimitive(interactsexclude);
+			ScriptContext.GlobalScriptContext.PushPrimitive(outresult);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x6C62B676);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			}
+		}
+
+        public static ulong PointContents(IntPtr pos, ulong contentsmask){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(pos);
+			ScriptContext.GlobalScriptContext.PushPrimitive(contentsmask);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x8A68FFAC);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			return ScriptContext.GlobalScriptContext.GetResultPrimitive<ulong>();
+			}
+		}
+
+        public static bool CheckAreaOverlappingEntity(IntPtr area, IntPtr entity, bool extrudehullheight){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(area);
+			ScriptContext.GlobalScriptContext.PushPrimitive(entity);
+			ScriptContext.GlobalScriptContext.PushPrimitive(extrudehullheight);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x2ACFC3F3);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
+			return ScriptContext.GlobalScriptContext.GetResultPrimitive<bool>();
+			}
+		}
+
+        public static void GetEntityWorldSpaceAabb(IntPtr entity, IntPtr minsout, IntPtr maxsout){
+			lock (ScriptContext.GlobalScriptContext.Lock) {
+			ScriptContext.GlobalScriptContext.Reset();
+			ScriptContext.GlobalScriptContext.PushPrimitive(entity);
+			ScriptContext.GlobalScriptContext.PushPrimitive(minsout);
+			ScriptContext.GlobalScriptContext.PushPrimitive(maxsout);
+			ScriptContext.GlobalScriptContext.SetIdentifier(0x6C485DCE);
+			ScriptContext.GlobalScriptContext.Invoke();
+			ScriptContext.GlobalScriptContext.CheckErrors();
 			}
 		}
 

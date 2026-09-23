@@ -166,10 +166,6 @@ public partial class CCSPlayerPawn : CCSPlayerPawnBase
 	[SchemaMember("CCSPlayerPawn", "m_vRagdollDamageForce")]
 	public Vector RagdollDamageForce => Schema.GetDeclaredClass<Vector>(this.Handle, "CCSPlayerPawn", "m_vRagdollDamageForce");
 
-	// m_vRagdollDamagePosition
-	[SchemaMember("CCSPlayerPawn", "m_vRagdollDamagePosition")]
-	public Vector RagdollDamagePosition => Schema.GetDeclaredClass<Vector>(this.Handle, "CCSPlayerPawn", "m_vRagdollDamagePosition");
-
 	// m_szRagdollDamageWeaponName
 	[SchemaMember("CCSPlayerPawn", "m_szRagdollDamageWeaponName")]
 	public string RagdollDamageWeaponName
@@ -425,6 +421,10 @@ public partial class CCSPlayerPawn : CCSPlayerPawnBase
 	// m_vecStashedGrenadeThrowPosition
 	[SchemaMember("CCSPlayerPawn", "m_vecStashedGrenadeThrowPosition")]
 	public Vector StashedGrenadeThrowPosition => Schema.GetDeclaredClass<Vector>(this.Handle, "CCSPlayerPawn", "m_vecStashedGrenadeThrowPosition");
+
+	// m_vecStashedGrenadeThrowPawnCenter
+	[SchemaMember("CCSPlayerPawn", "m_vecStashedGrenadeThrowPawnCenter")]
+	public Vector StashedGrenadeThrowPawnCenter => Schema.GetDeclaredClass<Vector>(this.Handle, "CCSPlayerPawn", "m_vecStashedGrenadeThrowPawnCenter");
 
 	// m_vecStashedVelocity
 	[SchemaMember("CCSPlayerPawn", "m_vecStashedVelocity")]
