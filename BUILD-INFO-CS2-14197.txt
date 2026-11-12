@@ -1,0 +1,13 @@
+CounterStrikeSharp 1.0.380-dev - custom Linux build for CS2 14197
+Build author: Snaximusss
+This is an unofficial development build, not an official v380 release.
+Source: https://github.com/roflmuffin/CounterStrikeSharp/pull/1490
+Source revision: 86e57d69ee33d0480a6ebd221b579860a26eeb78
+SDK revision: 81020d1a26b9d4321b9f030c96929ec18e8c0cff
+Changes: CS2 14197 non-virtual network message handle and normalized message names.
+Native toolchain: Valve Steam Runtime sniper SDK.
+Managed API: .NET 10; existing compatible runtime required.
+Install: stop server, back up existing installation, extract into game/csgo, restart.
+Includes native plugin, managed API, configs and gamedata. Existing configs may be overwritten.
+Validation: managed tests passed (29). Live CS2 server testing was not available.
+License: GPL-3.0, see LICENSE.
